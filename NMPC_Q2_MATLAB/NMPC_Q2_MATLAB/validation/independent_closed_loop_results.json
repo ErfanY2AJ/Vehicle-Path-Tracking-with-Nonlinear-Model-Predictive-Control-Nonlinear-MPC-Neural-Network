@@ -1,0 +1,44 @@
+{
+  "execution": "Independent NumPy port, not native MATLAB results",
+  "duration_s": 15,
+  "Np": 20,
+  "dt": 0.1,
+  "results": [
+    {
+      "method": "math",
+      "massFactor": 1.0,
+      "completed": true,
+      "positionRMSE_after5_m": 0.00506277200673195,
+      "speedRMSE_after5_mps": 0.0036863717511436593,
+      "fallback": 0,
+      "elapsedPython_s": 50.51165911300086
+    },
+    {
+      "method": "neural",
+      "massFactor": 1.0,
+      "completed": true,
+      "positionRMSE_after5_m": 0.006360899896602576,
+      "speedRMSE_after5_mps": 0.0036849444934493438,
+      "fallback": 0,
+      "elapsedPython_s": 167.17605684299997
+    },
+    {
+      "method": "math",
+      "massFactor": 1.1,
+      "completed": true,
+      "positionRMSE_after5_m": 0.005093014737032123,
+      "speedRMSE_after5_mps": 0.002822699551433417,
+      "fallback": 0,
+      "elapsedPython_s": 26.008960666999883
+    },
+    {
+      "method": "neural",
+      "massFactor": 1.1,
+      "completed": true,
+      "positionRMSE_after5_m": 0.006286913391683851,
+      "speedRMSE_after5_mps": 0.0028216861315612978,
+      "fallback": 0,
+      "elapsedPython_s": 191.49457418800012
+    }
+  ]
+}

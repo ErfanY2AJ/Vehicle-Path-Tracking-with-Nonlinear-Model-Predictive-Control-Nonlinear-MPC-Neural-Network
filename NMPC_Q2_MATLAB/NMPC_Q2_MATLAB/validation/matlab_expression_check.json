@@ -1,0 +1,8 @@
+{
+  "execution": "NumPy evaluation of extracted MATLAB expressions; NOT native MATLAB",
+  "networksChecked": 40,
+  "maxRelativeFiniteDifferenceError": 1.868663584586674e-10,
+  "maxDenseFormulaDifference": 6.338652045866176e-16,
+  "previousBugRelativeError": 11.829873861758735,
+  "previousBugRejected": true
+}
