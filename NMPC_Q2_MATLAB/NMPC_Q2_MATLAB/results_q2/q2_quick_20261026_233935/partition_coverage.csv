@@ -1,0 +1,4 @@
+Partition,Runs,Transitions,MinSpeed,MaxSpeed,MinTorqueNorm,MaxTorqueNorm,MinSteeringNorm,MaxSteeringNorm
+train,28,5600,4.81006240634153,26.0740270531827,-1,1,-1,1
+validation,6,1200,4.84338193162693,25.7636948822155,-1,1,-1,1
+test,6,1200,5.09573884832484,25.907084811884,-1,1,-1,1

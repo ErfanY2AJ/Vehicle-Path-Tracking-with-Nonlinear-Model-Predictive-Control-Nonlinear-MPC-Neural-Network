@@ -1,0 +1,11 @@
+Reference: Practice reference (not the supplied assignment path)
+Solver: projected-bfgs
+MATLAB: 25.2.0.2998904 (R2025b)
+Termination: Completed requested duration
+Completed: 1
+Status 1 = solver-reported convergence, 2 = feasible/not converged, 3 = fallback.
+Timing includes warm-cost evaluation, optimization and command selection.
+Original physical model, objective and bounds; alternative MATLAB solvers.
+Reference ay peak = 1.08 m/s^2 (diagnostic, not a safety constraint).
+Applied-input bound violations = 0
+Non-finite applied inputs = 0

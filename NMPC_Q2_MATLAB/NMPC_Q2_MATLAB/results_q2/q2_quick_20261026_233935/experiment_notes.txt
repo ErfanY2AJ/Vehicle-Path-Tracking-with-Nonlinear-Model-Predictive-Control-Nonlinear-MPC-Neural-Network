@@ -1,0 +1,11 @@
+MATLAB: 25.2.0.2998904 (R2025b)
+Mode: quick
+Data seed: 42
+All training data: exact nominal vehicle_step, no closed-loop path data.
+Whole-run splitting; all fitted transformations use training runs only.
+Predictor: learned body-frame increments, affine skip plus tanh MLP.
+Both NMPC controllers use analytical Jacobians and the same adjoint cost gradient.
+Plant, objective, horizon, bounds, warm start, and fallback are identical.
+Timing excludes live plotting, plant update, and CSV/MAT export.
+Practice reference replaces the unavailable original assignment path.
+Training and test metrics are separate from closed-loop controller metrics.
