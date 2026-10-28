@@ -77,7 +77,7 @@ x_{k+1}=f_d(x_k,u_k;p_{\rm nominal}),\qquad
 x_k=[p_x,p_y,v,\varphi,T]^{\mathsf T}.
 ```
 
-**MATLAB — [q2_generate_data.m](q2_generate_data.m)**
+**MATLAB — [q2_generate_data.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_generate_data.m)**
 
 ```matlab
 proposed = vehicle_step(X(:,k),U(:,k),p,dt);
@@ -113,7 +113,7 @@ The split is performed on run IDs, before fitting means, scales, or model coeffi
 =\varnothing.
 ```
 
-**MATLAB — [q2_prepare_data.m](q2_prepare_data.m)**
+**MATLAB — [q2_prepare_data.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_prepare_data.m)**
 
 ```matlab
 order = randperm(R);
@@ -139,7 +139,7 @@ v_k\\T_k/1965.1\\T_{u,k}/1965.1\\\delta_k/0.5
 \end{bmatrix}.
 ```
 
-**MATLAB — [q2_features.m](q2_features.m)**
+**MATLAB — [q2_features.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_features.m)**
 
 ```matlab
 F = [X(3,:); X(5,:)/scale(1); U(1,:)/scale(1); U(2,:)/scale(2)];
@@ -169,7 +169,7 @@ T_{k+1}-T_k
 \end{bmatrix}.
 ```
 
-**MATLAB — [q2_body_targets.m](q2_body_targets.m)**
+**MATLAB — [q2_body_targets.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_body_targets.m)**
 
 ```matlab
 d = Xnext-X;
@@ -225,7 +225,7 @@ a_2=\tanh(W_2a_1+b_2),\qquad
 r_\theta=W_3a_2+b_3.
 ```
 
-**MATLAB — [q2_mlp_forward.m](q2_mlp_forward.m)**
+**MATLAB — [q2_mlp_forward.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_mlp_forward.m)**
 
 ```matlab
 A1 = tanh(P.W1*Q+P.b1);
@@ -240,7 +240,7 @@ The complete increment prediction is:
 +\mu_r+\sigma_r\odot r_\theta(q).
 ```
 
-**MATLAB — [q2_nn_step.m](q2_nn_step.m)**
+**MATLAB — [q2_nn_step.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_nn_step.m)**
 
 ```matlab
 D = net.prep.affine*[ones(1,size(X,2));q]+net.prep.residualMean+ ...
@@ -259,7 +259,7 @@ For active residual heads `I`, the mini-batch objective is:
 \qquad \lambda=10^{-6}.
 ```
 
-**MATLAB — [q2_mlp_loss.m](q2_mlp_loss.m)**
+**MATLAB — [q2_mlp_loss.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_mlp_loss.m)**
 
 ```matlab
 [prediction,A1,A2] = q2_mlp_forward(P,Q);
@@ -291,7 +291,7 @@ s_t=0.999s_{t-1}+0.001g_t^2,
 \frac{\widehat m_t}{\sqrt{\widehat s_t}+10^{-8}}.
 ```
 
-**MATLAB — [q2_adam.m](q2_adam.m)**
+**MATLAB — [q2_adam.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_adam.m)**
 
 ```matlab
 state.m.(n)=opt.beta1*state.m.(n)+(1-opt.beta1)*gradient;
@@ -347,7 +347,7 @@ J = net.prep.affine(:,2:end)+net.prep.residualScale.*(Jhidden*P.W1);
 J = J./net.prep.featureStd.';
 ```
 
-The remaining reconstruction derivatives are implemented in [q2_nn_step.m](q2_nn_step.m). [q2_self_tests.m](q2_self_tests.m) compares both Jacobians and the full NMPC gradient against central differences.
+The remaining reconstruction derivatives are implemented in [q2_nn_step.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_nn_step.m). [q2_self_tests.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_self_tests.m) compares both Jacobians and the full NMPC gradient against central differences.
 
 ## Step 8 — Evaluate held-out predictions
 
@@ -379,7 +379,7 @@ For each `H = 1,5,10,20` and each test run with `K` commands, use all starting p
 \widehat x_{s+j+1}=f_\theta(\widehat x_{s+j},u_{s+j}).
 ```
 
-**MATLAB — [q2_evaluate_network.m](q2_evaluate_network.m)**
+**MATLAB — [q2_evaluate_network.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_evaluate_network.m)**
 
 ```matlab
 starts = 1:K-H+1;
@@ -402,7 +402,7 @@ These are prediction errors on random-control test runs. They are distinct from 
 
 ## Step 9 — Compare controllers with only the predictor changed
 
-The two controllers call one common cost implementation, [q2_objective.m](q2_objective.m):
+The two controllers call one common cost implementation, [q2_objective.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_objective.m):
 
 ```math
 J=\sum_{j=1}^{N_p}e_j^{\mathsf T}Qe_j
@@ -413,7 +413,7 @@ J=\sum_{j=1}^{N_p}e_j^{\mathsf T}Qe_j
 
 The terminal state receives both `Q` and `P`, exactly as in Question 1. Both use normalized command bounds `[-1,1]` and the same analytical adjoint gradient.
 
-**MATLAB — predictor dispatch in [q2_predictor_step.m](q2_predictor_step.m)**
+**MATLAB — predictor dispatch in [q2_predictor_step.m](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/q2_predictor_step.m)**
 
 ```matlab
 % Mathematical controller:
@@ -599,9 +599,9 @@ The authoring environment did not execute MATLAB. The supplied archive now provi
 - Learning and recursive evaluation in an independent numerical execution.
 - Separate 15-second closed-loop checks for both predictors, nominal and mass +10%, with finite positive-speed states and bounded commands.
 
-The script and its numerical verification output are in [validation/independent_q2_check.py](validation/independent_q2_check.py) and [validation/independent_verification.json](validation/independent_verification.json). The optional [closed-loop check](validation/independent_closed_loop_check.py) and its [recorded output](validation/independent_closed_loop_results.json) are also included. These are **independent NumPy checks, not MATLAB results**. The bundled network is not pretrained: the MATLAB workflow generates data and trains its own network.
+The script and its numerical verification output are in [validation/independent_q2_check.py](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/independent_q2_check.py) and [validation/independent_verification.json](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/independent_verification.json). The optional [closed-loop check](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/independent_closed_loop_check.py) and its [recorded output](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/independent_closed_loop_results.json) are also included. These are **independent NumPy checks, not MATLAB results**. The bundled network is not pretrained: the MATLAB workflow generates data and trains its own network.
 
-The additional [MATLAB-expression regression check](validation/check_matlab_jacobian_source.py) checks 40 random networks; its [recorded output](validation/matlab_expression_check.json) identifies the omitted-square regression. It evaluates a limited numeric expression subset and is not a MATLAB runtime.
+The additional [MATLAB-expression regression check](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/check_matlab_jacobian_source.py) checks 40 random networks; its [recorded output](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/validation/matlab_expression_check.json) identifies the omitted-square regression. It evaluates a limited numeric expression subset and is not a MATLAB runtime.
 
 Run `q2_self_tests` locally before an experiment. The supplied run records graphics, CSV/MAT export, training, prediction evaluation, and both default controller comparisons. It does not test the optional `fmincon` path or the 100-second standard workflow. Step 15 transcribes the provided native MATLAB outputs.
 
@@ -635,12 +635,12 @@ These are the supplied native MATLAB results, distinct from the earlier independ
 
 All four runs completed, each with 151 state samples and 150 commands. The after-5-second window has 101 states and 100 commands.
 
-**Repository layout:** keep this README inside `NMPC_Q2_MATLAB`, with the extracted `results_q2` directory alongside it. Images below use relative paths into `results_q2/q2_quick_20261026_233935`. GitHub cannot display images stored only inside a ZIP; extract and upload the files. If using Git, remove the `results_q2/` ignore rule or explicitly add this recorded directory.
+**Repository layout:** this README is intended for the **repository root**. In the current GitHub repository, the MATLAB source code and recorded results are stored under `NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/`. All links and images below point to that directory. GitHub cannot display images stored only inside a ZIP; the extracted files must be uploaded. If using Git, ensure that the recorded `results_q2/` directory is not ignored, or explicitly add its files.
 
 This 15-second preview covers the initial transient and first turn. It does not cover all later segments of the 100-second path. Full-run averages from different simulation durations should not be directly compared.
 
 
-Sources: [experiment_notes.txt](results_q2/q2_quick_20261026_233935/experiment_notes.txt) and [step01_options.mat](results_q2/q2_quick_20261026_233935/step01_options.mat).
+Sources: [experiment_notes.txt](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/experiment_notes.txt) and [step01_options.mat](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step01_options.mat).
 
 ### 15.2 Data coverage and training
 
@@ -652,15 +652,15 @@ Whole runs were split before preprocessing. Each partition covers [-1,1] in both
 | validation | 6 | 1200 | 4.84338 | 25.7637 |
 | test | 6 | 1200 | 5.09574 | 25.9071 |
 
-![Training-only input and state coverage](results_q2/q2_quick_20261026_233935/step03_training_coverage.png)
+![Training-only input and state coverage](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step03_training_coverage.png)
 
-Source: [partition_coverage.csv](results_q2/q2_quick_20261026_233935/partition_coverage.csv).
+Source: [partition_coverage.csv](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/partition_coverage.csv).
 
 The selected epoch was **150**, the final epoch. Training residual MSE decreased from 1.00148 to 0.00034124; validation residual MSE decreased from 0.937948 to **0.000294378**. The recorded training-loop time was 4.10343 s, excluding data generation and controller simulation. These losses use normalized residual targets, not tracking error in metres. Reaching the epoch limit does not establish that further training cannot improve the model.
 
-![Native MATLAB training and validation loss](results_q2/q2_quick_20261026_233935/step04_training_loss.png)
+![Native MATLAB training and validation loss](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step04_training_loss.png)
 
-Sources: [training_history.csv](results_q2/q2_quick_20261026_233935/training_history.csv); [step04_trained_network.mat](results_q2/q2_quick_20261026_233935/step04_trained_network.mat).
+Sources: [training_history.csv](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/training_history.csv); [step04_trained_network.mat](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step04_trained_network.mat).
 
 ### 15.3 One-step predictions on held-out runs
 
@@ -674,7 +674,7 @@ RMSE and MAE compare predicted and actual next states. R² is calculated on stat
 | phi | rad | 0.002698 | 0.00179477 | 0.352172 | 0.296133 | 0.999941 |
 | T | N m | 1.46365e-13 | 9.59233e-14 | 226.07 | 167.88 | 1 |
 
-Source: [one_step_test_metrics.csv](results_q2/q2_quick_20261026_233935/one_step_test_metrics.csv). Body-frame position and actuator increments are affine in this representation, explaining their near-machine-precision one-step fit. Heading and speed retain approximation errors, which can accumulate recursively.
+Source: [one_step_test_metrics.csv](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/one_step_test_metrics.csv). Body-frame position and actuator increments are affine in this representation, explaining their near-machine-precision one-step fit. Heading and speed retain approximation errors, which can accumulate recursively.
 
 ### 15.4 Recursive prediction
 
@@ -689,11 +689,11 @@ All starts with sufficient remaining commands were evaluated independently at ea
 
 Position errors are mean Euclidean endpoint errors; speed errors are mean absolute endpoint errors. All horizons reported zero nonfinite and zero nonpositive-speed endpoints. At 20 steps (2 s), neural mean position error reached **0.249434 m** and mean absolute speed error was **0.000307081 m/s**. Heading error accumulates through successive position updates, despite nearly exact one-step position reconstruction.
 
-![Held-out prediction errors and recursive comparison with persistence](results_q2/q2_quick_20261026_233935/step05_prediction_errors.png)
+![Held-out prediction errors and recursive comparison with persistence](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step05_prediction_errors.png)
 
-![Recorded test trajectory versus recursive neural prediction](results_q2/q2_quick_20261026_233935/step05_recursive_example.png)
+![Recorded test trajectory versus recursive neural prediction](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/step05_recursive_example.png)
 
-Source: [recursive_test_metrics.csv](results_q2/q2_quick_20261026_233935/recursive_test_metrics.csv).
+Source: [recursive_test_metrics.csv](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/recursive_test_metrics.csv).
 
 ### 15.5 Closed-loop tracking
 
@@ -721,9 +721,9 @@ The neural post-transient position RMSE was **12.6% higher** under nominal condi
 
 The 20-step random-control test error and closed-loop tracking RMSE describe different experiments: the controller follows a mild path and resets each optimization to the newly observed actual state. Their magnitudes should not be equated.
 
-![Nominal tracking: reference and both actual controller trajectories](results_q2/q2_quick_20261026_233935/nominal_mild/tracking_comparison.png)
+![Nominal tracking: reference and both actual controller trajectories](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/nominal_mild/tracking_comparison.png)
 
-![Mass +10 percent: reference and both actual controller trajectories](results_q2/q2_quick_20261026_233935/mass_plus10pct/tracking_comparison.png)
+![Mass +10 percent: reference and both actual controller trajectories](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/mass_plus10pct/tracking_comparison.png)
 
 ### 15.6 Control effort and smoothness
 
@@ -757,16 +757,16 @@ All runs reported zero fallback commands, zero bound violations, and zero nonfin
 
 Neural nonconvergence messages included `Maximum iterations reached` and `Small step; gradient tolerance not satisfied`. Their feasible candidates were retained according to the unchanged cost-based selection rule.
 
-![Nominal commands, solution times, and solver status](results_q2/q2_quick_20261026_233935/nominal_mild/inputs_solver_comparison.png)
+![Nominal commands, solution times, and solver status](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/nominal_mild/inputs_solver_comparison.png)
 
-![Mass +10 percent commands, solution times, and solver status](results_q2/q2_quick_20261026_233935/mass_plus10pct/inputs_solver_comparison.png)
+![Mass +10 percent commands, solution times, and solver status](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/mass_plus10pct/inputs_solver_comparison.png)
 
 ### 15.8 Recorded files
 
-- [Complete controller comparison CSV](results_q2/q2_quick_20261026_233935/final_comparison.csv)
-- [Nominal paired MATLAB results](results_q2/q2_quick_20261026_233935/nominal_mild/paired_results.mat)
-- [Mass-mismatch paired MATLAB results](results_q2/q2_quick_20261026_233935/mass_plus10pct/paired_results.mat)
-- [Complete MATLAB report and trained network](results_q2/q2_quick_20261026_233935/q2_report.mat)
-- [Run-to-partition assignment](results_q2/q2_quick_20261026_233935/run_partitions.csv)
+- [Complete controller comparison CSV](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/final_comparison.csv)
+- [Nominal paired MATLAB results](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/nominal_mild/paired_results.mat)
+- [Mass-mismatch paired MATLAB results](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/mass_plus10pct/paired_results.mat)
+- [Complete MATLAB report and trained network](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/q2_report.mat)
+- [Run-to-partition assignment](NMPC_Q2_MATLAB/NMPC_Q2_MATLAB/results_q2/q2_quick_20261026_233935/run_partitions.csv)
 
 Values in this section are rounded from the supplied CSV/MAT files. The raw files retain their recorded precision. No simulations were rerun to construct this results section.
